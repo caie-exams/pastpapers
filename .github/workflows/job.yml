@@ -1,6 +1,12 @@
 name: Update pastpapers
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "maximum attachment download count"
+        required: false
+        default: '0'
+      
 
 permissions:
   contents: read
@@ -25,7 +31,7 @@ jobs:
         pip install -r ./.github/workflows/requirements.txt
     - name: Run the script 
       run: |
-        ./.github/workflows/scrapper.py . --thread 50 --delay 0 --retries 10 --suffix .pdf .zip
+        ./.github/workflows/scrapper.py . --thread 50 --delay 0 --retries 10 --suffix .pdf .zip --limit ${{ inputs.limit }}
     - name: Commit files
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
