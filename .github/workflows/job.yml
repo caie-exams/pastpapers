@@ -31,7 +31,10 @@ jobs:
         pip install -r ./.github/workflows/requirements.txt
     - name: Run the script 
       run: |
-        ./.github/workflows/scrapper.py . --thread 50 --delay 0 --retries 10 --suffix .pdf .zip --limit ${{ inputs.limit }}
+        python3 ./.github/workflows/scrapper.py . --thread 50 --delay 0 --retries 10 --suffix .pdf .zip --limit ${{ inputs.limit }}
+    - name: Copy additional files
+      run: |
+        cp -r ./.github/workflows/additional/* .
     - name: Commit files
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
