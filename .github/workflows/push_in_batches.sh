@@ -26,7 +26,7 @@ do
     # take each line and add to another list
     
     newline=${file_list%%$'\n'*}
-    if ! [[ -f "$newline" ]]; then
+    if ! [[ -f "${newline#* }" ]]; then
         continue
     fi
     
