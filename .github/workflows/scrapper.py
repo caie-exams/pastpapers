@@ -107,7 +107,7 @@ class GCEScraper:
     def _attachment_url_handler(self, abs_url) -> bool:
         sub_path = " ".join(unquote(
             urlsplit(abs_url).path[1:]).strip().split()).replace(" ", "-")
-        path = os.path.join(self.save_path, )
+        path = os.path.join(self.save_path, sub_path)
 
         if os.path.exists(path):
             return False
