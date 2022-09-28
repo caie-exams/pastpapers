@@ -9,9 +9,8 @@ function git_push(){
     git config --local user.name "github-actions[bot]"
     git commit -m "commit in group size of $SIZE_LIMIT" -a
 
-#     remote_repo="https://${GITHUB_ACTOR}:${repo_token}@github.com/${GITHUB_REPOSITORY}.git"
+    remote_repo="https://${GITHUB_ACTOR}:${repo_token}@github.com/${GITHUB_REPOSITORY}.git"
     # only for testing, is revoked, do not even try.
-    remote_repo="https://justin-himself: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@github.com/${GITHUB_REPOSITORY}.git"
     git push "${remote_repo}" HEAD:${GITHUB_REF_NAME} --verbose
 }
 
