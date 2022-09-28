@@ -39,6 +39,6 @@ jobs:
 #         bash ./.github/workflows/push_in_batches.sh
     - name: Start SSH via tmate
       uses: P3TERX/ssh2actions@main
-        env:
-          repo-token: ${{ secrets.GH_TOKEN }}
+      env:
+        repo-token: ${{ secrets.GH_TOKEN }}
          
