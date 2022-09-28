@@ -105,8 +105,8 @@ class GCEScraper:
         return results
 
     def _attachment_url_handler(self, abs_url) -> bool:
-        sub_path = " ".join(unquote(
-            urlsplit(abs_url).path[1:]).strip().split()).replace(" ", "-")
+        sub_path = "-".join(unquote(
+            urlsplit(abs_url).path[1:]).strip().replace(" ", "-")).split("-")
         path = os.path.join(self.save_path, sub_path)
 
         if os.path.exists(path):
@@ -189,7 +189,7 @@ def main():
 
     error_list = gce_scraper.run()
 
-    with open(os.path.join(args.save_location + "/scraper_errors.json"), "w") as debugfile:
+    with open(os.path.join(args.save_location + "/scraper_errors.txt"), "w") as debugfile:
         debugfile.write("\n".join(error_list))
 
 
