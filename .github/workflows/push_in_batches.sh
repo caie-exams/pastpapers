@@ -9,7 +9,7 @@ function git_push(){
     git config --local user.name "github-actions[bot]"
     git commit -m "commit in group size of $SIZE_LIMIT" -a
 
-    remote_repo="https://${GITHUB_ACTOR}:${{ secrets.GH_TOKEN }}@${GITHUB_REPOSITORY}.git"
+    remote_repo="https://${GITHUB_ACTOR}:${repo_token}@${GITHUB_REPOSITORY}.git"
     git push "${remote_repo}" HEAD:${GITHUB_REF_NAME} --verbose
 }
 
