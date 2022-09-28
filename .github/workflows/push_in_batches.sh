@@ -12,7 +12,7 @@ function git_push(){
 
 git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
 git config --local user.name "github-actions[bot]"
-remote_repo="https://${GITHUB_ACTOR}:${repo-token}@github.com/${GITHUB_REPOSITORY}.git"
+remote_repo="https://${GITHUB_ACTOR}:${repo_token}@github.com/${GITHUB_REPOSITORY}.git"
 git config --local --add safe.directory .
 
 
