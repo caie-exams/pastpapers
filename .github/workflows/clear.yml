@@ -1,0 +1,31 @@
+name: Clear pastpapers
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+        fetch-depth: 0 
+    - name: Delete pastpapers
+      run : |
+        rm -rf A-Levels O-Levels IGCSE
+    - name: Commit files
+      run: |
+        git add .
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -m "Clear pastpapers." -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GH_TOKEN }}
+        branch: ${{ github.ref }}
