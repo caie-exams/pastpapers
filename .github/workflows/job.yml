@@ -32,17 +32,6 @@ jobs:
     - name: Run the script 
       run: |
         python3 ./.github/workflows/scrapper.py . --thread 50 --delay 0 --retries 10 --suffix .pdf .zip --limit ${{ inputs.limit }}
-    - name: Copy additional files
-      run: |
-        cp -r ./.github/workflows/additional/* .
-    - name: Commit files
-      run: |
-        git add .
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git commit -m "Update pastpapers." -a
     - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GH_TOKEN }}
-        branch: ${{ github.ref }}
+      run: |
+        bash ./.github/workflows/push_in_batches.py
