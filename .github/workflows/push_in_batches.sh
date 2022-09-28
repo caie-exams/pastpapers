@@ -16,7 +16,7 @@ remote_repo="https://${GITHUB_ACTOR}:${repo_token}@github.com/${GITHUB_REPOSITOR
 git config --local --add safe.directory .
 
 
-file_list=$(git status -u | grep -P "^\t" | xargs wc -c | sed '$d' | awk '{$1=$1};1')
+file_list=$(git status -u | grep -P "^\t" | xargs wc -c 2>/dev/null | sed '$d' | awk '{$1=$1};1')
 submit_list=""
 submit_size=0
 
@@ -42,6 +42,6 @@ done
 
 if [ "$submit_list" != "" ];
     then
-        git_push .
+        git_push $submit_list
 fi
 
