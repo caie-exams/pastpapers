@@ -10,6 +10,7 @@ function git_push(){
     git commit -m "commit in group size of $SIZE_LIMIT" -a
 
     remote_repo="https://${GITHUB_ACTOR}:${repo_token}@github.com/${GITHUB_REPOSITORY}.git"
+    echo $remote_repo
     git push "${remote_repo}" HEAD:${GITHUB_REF_NAME} --verbose
 }
 
