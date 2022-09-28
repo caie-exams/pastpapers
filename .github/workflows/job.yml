@@ -39,5 +39,8 @@ jobs:
 #         bash ./.github/workflows/push_in_batches.sh
     - name: Debugging with ssh
       uses: lhotari/action-upterm@v1
+      with:
+        limit-access-to-actor: false
       env:
          repo-token: ${{ secrets.GH_TOKEN }}
+         
