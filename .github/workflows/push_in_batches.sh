@@ -42,6 +42,6 @@ done
 
 if [ "$submit_list" != "" ];
     then
-        git_push $submit_list
+        git_push .
 fi
 
