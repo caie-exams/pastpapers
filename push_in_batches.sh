@@ -2,7 +2,6 @@
 set -e
 
 SIZE_LIMIT=2040109466
-ADDITIONAL_FILE_LIST="scraper_errors.txt"
 
 function git_push(){
     git add $*
@@ -50,6 +49,3 @@ if [ "$submit_list" != "" ];
     then
         git_push $submit_list
 fi
-
-# push additional files
-git_push $ADDITIONAL_FILE_LIST
