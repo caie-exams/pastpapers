@@ -6,6 +6,7 @@ ADDITIONAL_FILE_LIST="scraper_errors.txt"
 
 function git_push(){
     git add $*
+    echo $*
     git commit -m "commit in group size of $SIZE_LIMIT" -a --allow-empty
     git push "${remote_repo}" HEAD:${GITHUB_REF_NAME} --verbose
 }
