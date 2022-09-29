@@ -6,6 +6,15 @@
 
 This is a mirror of [papers.gceguide.com](https://papers.gceguide.com/), an online service providing downloading of CAIE pastpapers (past exam papers). The repo aims to provide an open channel for anyone to download the CAIE pastpapers. This repo also serves as a part of [pastpaper.us](https://pastpaper.us), a project to build custom CAIE exam paper. (currently in construction)
 
+This repo is not related to Cambridge Assessment (although has the logo on it) or GCEGuide.
+
+**Branches:**
+
+- main: contains scraping script and workflow for github actions
+- A-Levels: contains A Level pastpapers
+- O-Levels: contains O Level pastpapers
+- IGCSE: contains IGCSE pastpapers
+
 ## Q&A to teach you use Github
 
 Github supports varies ways to download in batch, so please work smart not work hard.
