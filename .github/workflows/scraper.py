@@ -104,9 +104,14 @@ class GCEScraper:
 
         return results
 
+    @staticmethod
+    def pathgen(save_path, abs_url):
+        sub_path = "-".join(list(filter(("").__ne__, unquote(
+            urlsplit(abs_url).path[1:]).strip().replace(" ", "-").split("-"))))
+        return os.path.join(save_path, sub_path)
+
     def _attachment_url_handler(self, abs_url) -> bool:
-        sub_path = "-".join(list(filter(("").__ne__,unquote(urlsplit(abs_url).path[1:]).strip().replace(" ", "-").split("-"))))
-        path = os.path.join(self.save_path, sub_path)
+        path = GCEScraper.pathgen(self.save_path, abs_url)
 
         if os.path.exists(path):
             return False
@@ -178,17 +183,18 @@ def main():
         "--limit", help="limit how many files can download", type=int, metavar="int",  default=0)
     parser.add_argument("--suffix", dest="attachment_suffix", type=str,
                         help="url with given suffix will be downloaded", metavar="suffix", nargs="+", default=[".pdf"])
+    parser.add_argument("--baseurl", type=str,
+                        help="the parent url which starts downloading", metavar="url",  default="https://papers.gceguide.com/")
 
     args = parser.parse_args()
 
     gce_scraper = GCEScraper(
         args.save_location, worker_num=args.thread, worker_delay=args.delay, tui=args.tui, attachment_suffix=args.attachment_suffix, download_limit=args.limit)
-    gce_scraper.add_url(
-        ["https://papers.gceguide.com/"])
+    gce_scraper.add_url([args.baseurl])
 
     error_list = gce_scraper.run()
 
-    with open(os.path.join(args.save_location + "/scraper_errors.txt"), "w") as debugfile:
+    with open(os.path.join(GCEScraper.pathgen(args.save_location, args.baseurl) + "/scraper_errors.txt"), "w") as debugfile:
         debugfile.write("\n".join(error_list))
 
 
