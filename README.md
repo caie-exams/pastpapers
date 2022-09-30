@@ -11,9 +11,9 @@ This repo is not related to Cambridge Assessment (although has the logo on it) o
 **Branches:**
 
 - main: contains scraping script and workflow for github actions
-- A-Levels: contains A Level pastpapers
-- O-Levels: contains O Level pastpapers
-- IGCSE: contains IGCSE pastpapers
+- [A-Levels](https://github.com/caie-exams/pastpapers/tree/A-Levels): contains A Level pastpapers
+- [O-Levels](https://github.com/caie-exams/pastpapers/tree/O-Levels): contains O Level pastpapers
+- [Cambridge-IGCSE](https://github.com/caie-exams/pastpapers/tree/Cambridge-IGCSE): contains IGCSE pastpapers
 
 ## Q&A to teach you use Github
 
