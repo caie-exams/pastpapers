@@ -207,7 +207,7 @@ def main():
 
     error_list = gce_scraper.run()
 
-    with open(os.path.join(GCEScraper.pathgen(args.save_location, args.baseurl) + "/scraper_errors.txt"), "w") as debugfile:
+    with open(os.path.join(GCEScraper.pathgen(os.getcwd(), args.baseurl) + "/scraper_errors.txt"), "w") as debugfile:
         debugfile.write("\n".join(error_list))
 
 
