@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ref: "A-Levels"
+      baseurl: "https://papers.gceguide.com/A%20Levels/"
     steps:
       - uses: actions/checkout@v3
         with:
@@ -31,29 +32,30 @@ jobs:
           wget https://github.com/caie-exams/pastpapers/raw/main/requirements.txt
           pip install -r requirements.txt
           rm requirements.txt
+      - name: Run the script
+        run: |
+          python3 <(curl -fsSL raw.githubusercontent.com/caie-exams/pastpapers/main/scraper.py) . \
+          --thread 50 --delay 0 --retries 10 \
+          --suffix .pdf .zip .docx .doc .xls .xlsx .mp3 .mp4 .ppt .pptx \
+          --limit ${{ inputs.limit }} \
+          --baseurl ${{env.baseurl}}
       - name: Generate filelist
         env:
           ref: ${{env.ref}}
         run: | 
           find ${ref} > filelist.txt
-      - name: Run the script
-        run: |
-          python3 <(curl -fsSL github.com/caie-exams/pastpapers/blob/main/scraper.py) . \
-          --thread 50 --delay 0 --retries 10 \
-          --suffix .pdf .zip .docx .doc .xls .xlsx .mp3 .mp4 .ppt .pptx \
-          --limit ${{ inputs.limit }} \
-          --baseurl "https://papers.gceguide.com/A%20Levels/"
       - name: Push changes
         env:
           repo_token: ${{ secrets.GH_TOKEN }}
           ref: ${{env.ref}}
         run: |
-          bash <(curl -fsSL github.com/caie-exams/pastpapers/blob/main/push_in_batches.sh)
+          bash <(curl -fsSL raw.githubusercontent.com/caie-exams/pastpapers/main/push_in_batches.sh)
           
   O-Levels:
     runs-on: ubuntu-latest
     env:
       ref: "O-Levels"
+      baseurl: "https://papers.gceguide.com/O%20Levels/"
     steps:
       - uses: actions/checkout@v3
         with:
@@ -70,29 +72,30 @@ jobs:
           wget https://github.com/caie-exams/pastpapers/raw/main/requirements.txt
           pip install -r requirements.txt
           rm requirements.txt
+      - name: Run the script
+        run: |
+          python3 <(curl -fsSL raw.githubusercontent.com/caie-exams/pastpapers/main/scraper.py) . \
+          --thread 50 --delay 0 --retries 10 \
+          --suffix .pdf .zip .docx .doc .xls .xlsx .mp3 .mp4 .ppt .pptx \
+          --limit ${{ inputs.limit }} \
+          --baseurl ${{env.baseurl}}
       - name: Generate filelist
         env:
           ref: ${{env.ref}}
         run: | 
           find ${ref} > filelist.txt
-      - name: Run the script
-        run: |
-          python3 <(curl -fsSL github.com/caie-exams/pastpapers/blob/main/scraper.py) . \
-          --thread 50 --delay 0 --retries 10 \
-          --suffix .pdf .zip .docx .doc .xls .xlsx .mp3 .mp4 .ppt .pptx \
-          --limit ${{ inputs.limit }} \
-          --baseurl "https://papers.gceguide.com/A%20Levels/"
       - name: Push changes
         env:
           repo_token: ${{ secrets.GH_TOKEN }}
           ref: ${{env.ref}}
         run: |
-          bash <(curl -fsSL github.com/caie-exams/pastpapers/blob/main/push_in_batches.sh)
+          bash <(curl -fsSL raw.githubusercontent.com/caie-exams/pastpapers/main/push_in_batches.sh)
           
   Cambridge-IGCSE:
     runs-on: ubuntu-latest
     env:
       ref: "Cambridge-IGCSE"
+      baseurl: "https://papers.gceguide.com/Cambridge%20IGCSE/"
     steps:
       - uses: actions/checkout@v3
         with:
@@ -109,21 +112,21 @@ jobs:
           wget https://github.com/caie-exams/pastpapers/raw/main/requirements.txt
           pip install -r requirements.txt
           rm requirements.txt
+      - name: Run the script
+        run: |
+          python3 <(curl -fsSL raw.githubusercontent.com/caie-exams/pastpapers/main/scraper.py) . \
+          --thread 50 --delay 0 --retries 10 \
+          --suffix .pdf .zip .docx .doc .xls .xlsx .mp3 .mp4 .ppt .pptx \
+          --limit ${{ inputs.limit }} \
+          --baseurl ${{env.baseurl}}
       - name: Generate filelist
         env:
           ref: ${{env.ref}}
         run: | 
           find ${ref} > filelist.txt
-      - name: Run the script
-        run: |
-          python3 <(curl -fsSL github.com/caie-exams/pastpapers/blob/main/scraper.py) . \
-          --thread 50 --delay 0 --retries 10 \
-          --suffix .pdf .zip .docx .doc .xls .xlsx .mp3 .mp4 .ppt .pptx \
-          --limit ${{ inputs.limit }} \
-          --baseurl "https://papers.gceguide.com/A%20Levels/"
       - name: Push changes
         env:
           repo_token: ${{ secrets.GH_TOKEN }}
           ref: ${{env.ref}}
         run: |
-          bash <(curl -fsSL github.com/caie-exams/pastpapers/blob/main/push_in_batches.sh)
+          bash <(curl -fsSL raw.githubusercontent.com/caie-exams/pastpapers/main/push_in_batches.sh)
