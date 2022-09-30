@@ -17,11 +17,11 @@ jobs:
       ref: "A-Levels"
       baseurl: "https://papers.gceguide.com/A%20Levels/"
     steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-          fetch-depth: 0
+      - name: checkout
+        env:
           ref: ${{env.ref}}
+        run: |
+          git clone --branch ${ref} --single-branch https://github.com/${GITHUB_REPOSITORY}.git .
       - name: Set up Python 3.10
         uses: actions/setup-python@v3
         with:
@@ -57,11 +57,11 @@ jobs:
       ref: "O-Levels"
       baseurl: "https://papers.gceguide.com/O%20Levels/"
     steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-          fetch-depth: 0
+      - name: checkout
+        env:
           ref: ${{env.ref}}
+        run: |
+          git clone --branch ${ref} --single-branch https://github.com/${GITHUB_REPOSITORY}.git .
       - name: Set up Python 3.10
         uses: actions/setup-python@v3
         with:
@@ -97,11 +97,11 @@ jobs:
       ref: "Cambridge-IGCSE"
       baseurl: "https://papers.gceguide.com/Cambridge%20IGCSE/"
     steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-          fetch-depth: 0
+      - name: checkout
+        env:
           ref: ${{env.ref}}
+        run: |
+          git clone --branch ${ref} --single-branch https://github.com/${GITHUB_REPOSITORY}.git .
       - name: Set up Python 3.10
         uses: actions/setup-python@v3
         with:
