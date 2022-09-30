@@ -22,7 +22,7 @@ jobs:
         ref: ${{ inputs.ref }}
     - name: Delete pastpapers
       run : |
-        rm -rf ./*
+        git rm -rf ./*
     - name: Commit files
       run: |
         git add .
