@@ -2,10 +2,9 @@ name: Clear pastpapers
 on:
   workflow_dispatch:
     inputs:
-      red:
+      ref:
         description: "branch to be cleared"
-        required: false
-        default: "0"
+        required: true
 
 permissions:
   contents: read
