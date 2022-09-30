@@ -7,11 +7,12 @@ import argparse
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlsplit,  unquote, quote
 from time import sleep
+from datasize import DataSize
 
 
 class GCEScraper:
 
-    def __init__(self, save_path, worker_num=10, worker_delay=0.1, max_size=0, tui=False, attachment_suffix=[".pdf", ".zip"], max_retries=10, download_limit=0) -> None:
+    def __init__(self, save_path, worker_num=10, worker_delay=0.1, max_size=0, tui=False, attachment_suffix=[".pdf", ".zip"], max_retries=10, download_limit=0, max_attachment_size=104857600) -> None:
         self.task_queue = queue.Queue(max_size)
         self.error_queue = queue.Queue(max_size)
         self.state_dict = {i: "" for i in range(0, worker_num)}
@@ -23,6 +24,7 @@ class GCEScraper:
         self.attachment_suffix = attachment_suffix
         self.max_retries = max_retries
         self.download_limit = download_limit
+        self.max_attachment_size = max_attachment_size
 
         self.terminated = False
         self.download_count = 0
@@ -119,6 +121,11 @@ class GCEScraper:
         # not exist, download the file
         file = requests.get(abs_url).content
 
+        # detect if exceeds max file size
+        if sys.getsizeof(file) >= self.max_attachment_size:
+            self.error_queue.put(abs_url)
+            return False
+
         # save the file
         dirpath = os.path.split(path)[0]
         if not os.path.exists(dirpath):
@@ -128,6 +135,8 @@ class GCEScraper:
 
         # update download count
         self.download_count += 1
+
+        return True
 
     def _worker(self,  delay, update_state):
         while not self.terminated:
@@ -185,11 +194,15 @@ def main():
                         help="url with given suffix will be downloaded", metavar="suffix", nargs="+", default=[".pdf"])
     parser.add_argument("--baseurl", type=str,
                         help="the parent url which starts downloading", metavar="url",  default="https://papers.gceguide.com/")
+    parser.add_argument(
+        "--max-attachment-size", dest="max_attachment_size",   help="the file larger than this size won't be downloaded, e.g. 100MiB ", type=str, metavar="size",  default="100MiB")
 
     args = parser.parse_args()
 
     gce_scraper = GCEScraper(
-        args.save_location, worker_num=args.thread, worker_delay=args.delay, tui=args.tui, attachment_suffix=args.attachment_suffix, download_limit=args.limit)
+        args.save_location, worker_num=args.thread, worker_delay=args.delay, tui=args.tui,
+        attachment_suffix=args.attachment_suffix, download_limit=args.limit,
+        max_attachment_size=int(DataSize(args.max_attachment_size).__str__()))
     gce_scraper.add_url([args.baseurl])
 
     error_list = gce_scraper.run()
