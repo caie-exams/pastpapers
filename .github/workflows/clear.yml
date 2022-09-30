@@ -1,6 +1,11 @@
 name: Clear pastpapers
 on:
   workflow_dispatch:
+    inputs:
+      red:
+        description: "branch to be cleared"
+        required: false
+        default: "0"
 
 permissions:
   contents: read
@@ -15,9 +20,10 @@ jobs:
       with:
         persist-credentials: false
         fetch-depth: 0 
+        ref: ${{ inputs.ref }}
     - name: Delete pastpapers
       run : |
-        rm -rf A-Levels O-Levels IGCSE
+        rm -rf ./*
     - name: Commit files
       run: |
         git add .
@@ -30,9 +36,7 @@ jobs:
         pip install git-filter-repo
     - name: Reduce repo size
       run : |
-        git filter-repo --invert-paths --force --path A-Levels 
-        git filter-repo --invert-paths --force --path O-Levels
-        git filter-repo --invert-paths --force --path IGCSE
+        git filter-repo --invert-paths --force --path *
         git update-ref -d refs/original/refs/heads/master
         git reflog expire --expire=now --all
         git gc --prune=now
@@ -40,5 +44,5 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GH_TOKEN }}
-        branch: ${{ github.ref }}
+        branch: ${{ inputs.ref }}
         force: true
